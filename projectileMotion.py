@@ -214,9 +214,9 @@ while True:
         maxHeight = -(vel*math.sin(psi[1]))**2/(2*grav)
         Range = vel*math.cos(psi[1])*totTime
 
-        text1 = font.render(f"The ball's displacement is {round(Range)} metres.", True, (0, 0, 0))
-        text2 = font.render(f"Its maximum height was {round(maxHeight)} metres.", True, (0, 0, 0))
-        text3 = font.render(f"It was above the ground for {round(totTime)} seconds.", True, (0, 0, 0))
+        text1 = font.render(f"The ball's displacement is {round(Range, 2)}m", True, (0, 0, 0))
+        text2 = font.render(f"Its maximum height was {round(maxHeight, 2)}m", True, (0, 0, 0))
+        text3 = font.render(f"It was above the ground for {round(totTime, 2)}s", True, (0, 0, 0))
         pygame.draw.rect(simSurface, (120, 220, 0), (0,620,960,100))
         pygame.draw.circle(simSurface, (255,255,255,255), (- x_x, 620 - x_y), 10)
 
