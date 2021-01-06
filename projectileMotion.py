@@ -27,6 +27,28 @@ clock = pygame.time.Clock()
 play_button = pygame_gui.elements.UIButton(relative_rect = pygame.Rect((simSize[0], 0), (100, 50)), text = "Play/Stop", manager = manager)
 
 
+#variables
+g = ["g(m/s²)", -98]
+psi = ["θ(°)", math.pi/3] #angle of release -> get user input
+v = ["u(m/s)", 300] #velocity -> get user input
+
+g_name = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0],50), (120, 50)), text = f"{g[0]}", manager = manager)
+g_increase = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+120,50), (50, 50)), text = "↑", manager = manager)
+g_decrease = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+170, 50), (50, 50)), text = "↓", manager = manager)
+g_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 50), (100, 50)), text = f"{g[1]/10}", manager = manager)
+
+psi_name = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0],100), (120, 50)), text = f"{psi[0]}", manager = manager)
+psi_increase = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+120,100), (50, 50)), text = "↑", manager = manager)
+psi_decrease = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+170, 100), (50, 50)), text = "↓", manager = manager)
+psi_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 100), (100, 50)), text = f"{round(math.degrees(psi[1]))}", manager = manager)
+
+v_name = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0],150), (120, 50)), text = f"{v[0]}", manager = manager)
+v_increase = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+120,150), (50, 50)), text = "↑", manager = manager)
+v_decrease = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+170, 150), (50, 50)), text = "↓", manager = manager)
+v_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 150), (100, 50)), text = f"{v[1]/10}", manager = manager)
+
+font = pygame.font.SysFont("timesnewroman", 20)
+
 
 while True:
     for event in pygame.event.get():
@@ -50,6 +72,25 @@ while True:
                         t_arrow = 0.3
                         running = True
                         menu = False
+                    if event.ui_element == g_decrease:
+                        g[1] -= 2
+                        g_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 50), (100, 50)), text = f"{g[1]/10}", manager = manager)
+                    if event.ui_element == g_increase:
+                        g[1] += 2
+                        g_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 50), (100, 50)), text = f"{g[1]/10}", manager = manager)
+                    if event.ui_element == psi_decrease:
+                        psi[1] -= 5*math.pi/180
+                        psi_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 100), (100, 50)), text = f"{round(math.degrees(psi[1]))}", manager = manager)
+                    if event.ui_element == psi_increase:
+                        psi[1] += 5*math.pi/180
+                        psi_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 100), (100, 50)), text = f"{round(math.degrees(psi[1]))}", manager = manager)
+                    if event.ui_element == v_decrease:
+                        v[1] -= 5
+                        v_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 150), (100, 50)), text = f"{v[1]/10}", manager = manager)
+                    if event.ui_element == v_increase:
+                        v[1] += 5
+                        v_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 150), (100, 50)), text = f"{v[1]/10}", manager = manager)
+
             manager.process_events(event)
         manager.update(time_delta)
         manager.draw_ui(screen)
@@ -85,32 +126,52 @@ while True:
                         menu = True
                         running = False
                         
+                    if event.ui_element == g_decrease:
+                        g[1] -= 2
+                        g_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 50), (100, 50)), text = f"{g[1]/10}", manager = manager)
+                    if event.ui_element == g_increase:
+                        g[1] += 2
+                        g_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 50), (100, 50)), text = f"{g[1]/10}", manager = manager)
+                    if event.ui_element == psi_decrease:
+                        psi[1] -= 5*math.pi/180
+                        psi_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 100), (100, 50)), text = f"{round(math.degrees(psi[1]))}", manager = manager)
+                    if event.ui_element == psi_increase:
+                        psi[1] += 5*math.pi/180
+                        psi_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 100), (100, 50)), text = f"{round(math.degrees(psi[1]))}", manager = manager)
+                    if event.ui_element == v_decrease:
+                        v[1] -= 5
+                        v_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 150), (100, 50)), text = f"{v[1]/10}", manager = manager)
+                    if event.ui_element == v_increase:
+                        v[1] += 5
+                        v_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 150), (100, 50)), text = f"{v[1]/10}", manager = manager)
+
+                        
             manager.process_events(event)
         
 
         #equations
-        g = -98
+        # g = -98
 
-        psi = math.pi/2.5 #angle of release -> get user input
-        v = 300 #velocity -> get user input
+        # psi = math.pi/2.5 #angle of release -> get user input
+        # v = 300 #velocity -> get user input
 
-        v_x = v * math.cos(psi)
-        u_y = v * math.sin(psi)
-        v_y = u_y + g*t
+        v_x = v[1] * math.cos(psi[1])
+        u_y = v[1] * math.sin(psi[1])
+        v_y = u_y + g[1]*t
 
         x_x = -v_x*t
-        x_y = ((v_y)**2-(u_y)**2)/(2*g)
+        x_y = ((v_y)**2-(u_y)**2)/(2*g[1])
 
         x = (x_x, x_y)
 
         #equations for velocity arrow
 
-        v_x_arrow = v * math.cos(psi)
-        u_y_arrow = v * math.sin(psi)
-        v_y_arrow = u_y + g*t_arrow
+        v_x_arrow = v[1] * math.cos(psi[1])
+        u_y_arrow = v[1] * math.sin(psi[1])
+        v_y_arrow = u_y + g[1]*t_arrow
 
         x_x_arrow = -v_x_arrow*t_arrow
-        x_y_arrow = ((v_y_arrow)**2-(u_y_arrow)**2)/(2*g)
+        x_y_arrow = ((v_y_arrow)**2-(u_y_arrow)**2)/(2*g[1])
 
         x_arrow = (x_x_arrow, x_y_arrow)
 
@@ -134,16 +195,28 @@ while True:
             rotation = math.degrees(math.atan2(start[1]-end[1], end[0]-start[0]))+90
             pygame.draw.polygon(screen, colour, ((end[0]+5*math.sin(math.radians(rotation)), end[1]+5*math.cos(math.radians(rotation))), (end[0]+5*math.sin(math.radians(rotation-120)), end[1]+5*math.cos(math.radians(rotation-120))), (end[0]+5*math.sin(math.radians(rotation+120)), end[1]+5*math.cos(math.radians(rotation+120)))))
         setattr(pygame.draw, "arrow", draw_arrow)
-        pygame.draw.arrow(simSurface, [255, 255, 255, 255], ((- x_x, 620 - x_y)), ((- x_x, 660 - x_y)))
+        pygame.draw.arrow(simSurface, [255, 255, 255, 255], ((- x_x, 620 - x_y)), ((- x_x, 670 - x_y)))
         pygame.draw.arrow(simSurface, [255, 255, 255, 255], ((- x_x, 620 - x_y)), ((- x_x_arrow, 620 - x_y_arrow)))
 
 
         #Drawing the cannon
-        pygame.draw.polygon(simSurface, (255, 255, 255, 255), [(0, 620), (30, 620), (30*math.cos(psi) + 30, (620 - 30*math.sin(psi))), ((30*math.cos(psi)), (620 - 30*math.sin(psi)))])
+        pygame.draw.polygon(simSurface, (255, 255, 255, 255), [(0, 620), (30, 620), (30*math.cos(psi[1]) + 30, (620 - 30*math.sin(psi[1]))), ((30*math.cos(psi[1])), (620 - 30*math.sin(psi[1])))])
 
         
         #HAVE THE USER ADJUST SETTINGS THEN PLAY THE SIMULATION
         #HENCE, INTRODUCE A BUTTON, THAT WHEN PRESSED STARTS DRAWING THE CIRCLE
+
+        grav = g[1]/10
+        vel = v[1]/10
+        
+        halfTime = -vel*math.sin(psi[1])/grav
+        totTime = 2*halfTime
+        maxHeight = -(vel*math.sin(psi[1]))**2/(2*grav)
+        Range = vel*math.cos(psi[1])*totTime
+
+        text1 = font.render(f"The ball's displacement is {round(Range)} metres.", True, (0, 0, 0))
+        text2 = font.render(f"Its maximum height was {round(maxHeight)} metres.", True, (0, 0, 0))
+        text3 = font.render(f"It was above the ground for {round(totTime)} seconds.", True, (0, 0, 0))
         pygame.draw.rect(simSurface, (120, 220, 0), (0,620,960,100))
         pygame.draw.circle(simSurface, (255,255,255,255), (- x_x, 620 - x_y), 10)
 
@@ -151,6 +224,9 @@ while True:
         manager.update(time_delta)
         
         screen.blit(simSurface, (0,0))
-        screen.blit(menuSurface, ((math.floor(screenSize[0]*3/4)), 0))    
+        screen.blit(menuSurface, ((math.floor(screenSize[0]*3/4)), 0))
+        screen.blit(text1, ((math.floor(screenSize[0]*3/4)), 220))
+        screen.blit(text2, ((math.floor(screenSize[0]*3/4)), 260))
+        screen.blit(text3, ((math.floor(screenSize[0]*3/4)), 300))
         manager.draw_ui(screen)
         pygame.display.update()
