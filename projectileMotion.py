@@ -47,6 +47,9 @@ v_increase = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+
 v_decrease = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+170, 150), (50, 50)), text = "↓", manager = manager)
 v_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 150), (100, 50)), text = f"{v[1]/10}", manager = manager)
 
+vel_arrow_colour = [255,255,255,255]
+grav_arrow_colour = [255,255,255,255]
+
 font = pygame.font.SysFont("timesnewroman", 20)
 
 
@@ -90,7 +93,7 @@ while True:
                     if event.ui_element == v_increase:
                         v[1] += 5
                         v_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 150), (100, 50)), text = f"{v[1]/10}", manager = manager)
-
+                
             manager.process_events(event)
         manager.update(time_delta)
         manager.draw_ui(screen)
@@ -144,6 +147,19 @@ while True:
                     if event.ui_element == v_increase:
                         v[1] += 5
                         v_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 150), (100, 50)), text = f"{v[1]/10}", manager = manager)
+                if event.user_type == pygame_gui.UI_BUTTON_ON_HOVERED:
+                    if event.ui_element == g_name:
+                        grav_arrow_colour = [255,255,0,255]
+                    if event.ui_element == v_name:
+                        vel_arrow_colour = [255,255,0,255]
+                elif event.user_type == pygame_gui.UI_BUTTON_ON_UNHOVERED:
+                    if event.ui_element == g_name:
+                        grav_arrow_colour = [255, 255, 255, 255]
+                    if event.ui_element == v_name:
+                        vel_arrow_colour = [255, 255, 255, 255]
+                    
+
+
 
                         
             manager.process_events(event)
@@ -195,8 +211,10 @@ while True:
             rotation = math.degrees(math.atan2(start[1]-end[1], end[0]-start[0]))+90
             pygame.draw.polygon(screen, colour, ((end[0]+5*math.sin(math.radians(rotation)), end[1]+5*math.cos(math.radians(rotation))), (end[0]+5*math.sin(math.radians(rotation-120)), end[1]+5*math.cos(math.radians(rotation-120))), (end[0]+5*math.sin(math.radians(rotation+120)), end[1]+5*math.cos(math.radians(rotation+120)))))
         setattr(pygame.draw, "arrow", draw_arrow)
-        pygame.draw.arrow(simSurface, [255, 255, 255, 255], ((- x_x, 620 - x_y)), ((- x_x, 670 - x_y)))
-        pygame.draw.arrow(simSurface, [255, 255, 255, 255], ((- x_x, 620 - x_y)), ((- x_x_arrow, 620 - x_y_arrow)))
+
+        
+        pygame.draw.arrow(simSurface, grav_arrow_colour, ((- x_x, 620 - x_y)), ((- x_x, 670 - x_y)))
+        pygame.draw.arrow(simSurface, vel_arrow_colour, ((- x_x, 620 - x_y)), ((- x_x_arrow, 620 - x_y_arrow)))
 
 
         #Drawing the cannon
