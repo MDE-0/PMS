@@ -17,10 +17,16 @@ menuSize = (screenSize[0]-simSize[0], screenSize[1])
 pygame.display.set_caption("Interactive Projectile Motion Simulation")
 screen.fill((0,0,0))
 
+#introduce gui manager
+manager = pygame_gui.UIManager(menuSize)
+clock = pygame.time.Clock()
 
+#introduce play button
+play_button = pygame_gui.elements.UIButton(relative_rect = pygame.Rect((0,0), (100, 50)), text = "Play/Stop", manager = manager)
 
 #main loop
 while running == True:
+    time_delta = clock.tick(144)/1000.0
     t = pygame.time.get_ticks()/1000
     t_arrow = (pygame.time.get_ticks()+300)/1000
     simSurface = pygame.Surface(simSize)
@@ -38,6 +44,9 @@ while running == True:
             menuSize = (menuSize[0],event.h)
             simSize = (screenSize[0] - menuSize[0], screenSize[1])
             screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+        
+        manager.process_events(event)
+    
 
     #equations
     g = -98
@@ -86,7 +95,8 @@ while running == True:
     pygame.draw.circle(simSurface, (255,255,255,255), (- x_x, 620 - x_y), 10)
 
     #when circle comes into contact with the green floor, KILL THE CIRCLE, DO NOT CLOSE PROGRAM, AND STATE HOW FAR IT TRAVELLED, IT'S MAX HEIGHT AND THE TIME IT WAS ABOVE GROUND
-
+    manager.update(time_delta)
+    manager.draw_ui(menuSurface)
     screen.blit(simSurface, (0,0))
     screen.blit(menuSurface, ((math.floor(screenSize[0]*3/4)), 0))    
     pygame.display.update()
