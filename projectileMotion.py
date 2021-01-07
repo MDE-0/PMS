@@ -56,7 +56,7 @@ font = pygame.font.SysFont("timesnewroman", 20)
 while True:
     time_delta = clock.tick(144)/1000.0
     for event in pygame.event.get():
-        if event.type == pygame.QUIT or (event.type == KEYDOWN and even.key == K_ESCAPE):
+        if event.type == pygame.QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
             pygame.quit()
             exit()
         if event.type == VIDEORESIZE:
@@ -74,7 +74,7 @@ while True:
     while menu == True:
         time_delta = clock.tick(144)/1000.0
         for event in pygame.event.get():
-            if event.type == pygame.QUIT or (event.type == KEYDOWN and even.key == K_ESCAPE):
+            if event.type == pygame.QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
                 pygame.quit()
                 exit()
             if event.type == VIDEORESIZE:
@@ -126,7 +126,7 @@ while True:
         menuSurface = pygame.Surface(menuSize)
         menuSurface.fill((200,200,200))
         for event in pygame.event.get():
-            if event.type == pygame.QUIT or (event.type == KEYDOWN and even.key == K_ESCAPE):
+            if event.type == pygame.QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
                 pygame.quit()
                 exit()
 
