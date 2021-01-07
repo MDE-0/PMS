@@ -13,7 +13,7 @@ menu = True
 
 
 screenSize = (1280, 720)
-screen = pygame.display.set_mode(screenSize)
+screen = pygame.display.set_mode(screenSize)#, pygame.RESIZABLE)
 simSize = (math.floor(screenSize[0]*3/4), screenSize[1])
 menuSize = (screenSize[0]-simSize[0], screenSize[1])
 pygame.display.set_caption("Interactive Projectile Motion Simulation")
@@ -54,10 +54,20 @@ font = pygame.font.SysFont("timesnewroman", 20)
 
 
 while True:
+    time_delta = clock.tick(144)/1000.0
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == KEYDOWN and even.key == K_ESCAPE):
             pygame.quit()
             exit()
+        if event.type == VIDEORESIZE:
+            screenSize = (event.w,event.h)
+            menuSize = (screenSize[0]-simSize[0],event.h)
+            simSize = (math.floor(screenSize[0]*3/4), screenSize[1])
+            screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+            
+    manager.update(time_delta)
+    manager.draw_ui(screen)
+    pygame.display.update()
     
 
     #menu loop
@@ -67,6 +77,12 @@ while True:
             if event.type == pygame.QUIT or (event.type == KEYDOWN and even.key == K_ESCAPE):
                 pygame.quit()
                 exit()
+            if event.type == VIDEORESIZE:
+                screenSize = (event.w,event.h)
+                menuSize = (screenSize[0]-simSize[0],event.h)
+                simSize = (math.floor(screenSize[0]*3/4), screenSize[1])
+                screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+                
             if event.type == pygame.USEREVENT:
                 if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                     if event.ui_element == play_button:
@@ -120,6 +136,7 @@ while True:
                 menuSize = (menuSize[0],event.h)
                 simSize = (screenSize[0] - menuSize[0], screenSize[1])
                 screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+                
 
             if event.type == pygame.USEREVENT:
                 if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
@@ -192,8 +209,9 @@ while True:
         x_arrow = (x_x_arrow, x_y_arrow)
 
         #collision stuff
-        rect1 = pygame.Rect(0,620,960,100)
-        rect2 = pygame.Rect(- x_x, 620 - x_y, 1, 1)
+        sky = pygame.Rect(0, 0, simSize[0], simSize[1]-100)
+        rect1 = pygame.Rect(0,simSize[1]-100,simSize[0],100)
+        rect2 = pygame.Rect(- x_x, simSize[1]-100 - x_y, 1, 1)
         collide = rect1.colliderect(rect2)
         if collide:
             t = 0
@@ -202,6 +220,7 @@ while True:
             running = False
         pygame.draw.rect(simSurface, (100, 100, 100, 100), rect1)
         pygame.draw.rect(simSurface, (100, 100, 100, 100), rect2)
+        pygame.draw.rect(simSurface, (0, 0, 255, 0), sky)
 
 
 
@@ -213,12 +232,12 @@ while True:
         setattr(pygame.draw, "arrow", draw_arrow)
 
         
-        pygame.draw.arrow(simSurface, grav_arrow_colour, ((- x_x, 620 - x_y)), ((- x_x, 670 - x_y)))
-        pygame.draw.arrow(simSurface, vel_arrow_colour, ((- x_x, 620 - x_y)), ((- x_x_arrow, 620 - x_y_arrow)))
+        pygame.draw.arrow(simSurface, grav_arrow_colour, ((- x_x, simSize[1]-100 - x_y)), ((- x_x, simSize[1] - 50 - x_y)))
+        pygame.draw.arrow(simSurface, vel_arrow_colour, ((- x_x, simSize[1]-100 - x_y)), ((- x_x_arrow, simSize[1]-100 - x_y_arrow)))
 
 
         #Drawing the cannon
-        pygame.draw.polygon(simSurface, (255, 255, 255, 255), [(0, 620), (30, 620), (30*math.cos(psi[1]) + 30, (620 - 30*math.sin(psi[1]))), ((30*math.cos(psi[1])), (620 - 30*math.sin(psi[1])))])
+        pygame.draw.polygon(simSurface, (255, 255, 255, 255), [(0, simSize[1]-100), (30, simSize[1]-100), (30*math.cos(psi[1]) + 30, (simSize[1]-100 - 30*math.sin(psi[1]))), ((30*math.cos(psi[1])), (simSize[1]-100 - 30*math.sin(psi[1])))])
 
         
         #HAVE THE USER ADJUST SETTINGS THEN PLAY THE SIMULATION
@@ -235,8 +254,8 @@ while True:
         text1 = font.render(f"The ball's displacement is {round(Range, 2)}m", True, (0, 0, 0))
         text2 = font.render(f"Its maximum height was {round(maxHeight, 2)}m", True, (0, 0, 0))
         text3 = font.render(f"It was above the ground for {round(totTime, 2)}s", True, (0, 0, 0))
-        pygame.draw.rect(simSurface, (120, 220, 0), (0,620,960,100))
-        pygame.draw.circle(simSurface, (255,255,255,255), (- x_x, 620 - x_y), 10)
+        pygame.draw.rect(simSurface, (120, 220, 0), (0,simSize[1]-100,simSize[0],100))
+        pygame.draw.circle(simSurface, (255,255,255,255), (- x_x, simSize[1]-100 - x_y), 10)
 
         #when circle comes into contact with the green floor, KILL THE CIRCLE, DO NOT CLOSE PROGRAM, AND STATE HOW FAR IT TRAVELLED, IT'S MAX HEIGHT AND THE TIME IT WAS ABOVE GROUND
         manager.update(time_delta)
