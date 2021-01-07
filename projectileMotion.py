@@ -12,7 +12,7 @@ running = False
 menu = True
 
 
-screenSize = (1280, 720)
+screenSize = (1900, 1000)
 screen = pygame.display.set_mode(screenSize)#, pygame.RESIZABLE)
 simSize = (math.floor(screenSize[0]*3/4), screenSize[1])
 menuSize = (screenSize[0]-simSize[0], screenSize[1])
@@ -95,19 +95,19 @@ while True:
                         g_value.kill()
                         g[1] -= 2
                         g_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 50), (100, 50)), text = f"{g[1]/10}", manager = manager)
-                    if event.ui_element == g_increase:
+                    if event.ui_element == g_increase and g[1] < -2:
                         g_value.kill()
                         g[1] += 2
                         g_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 50), (100, 50)), text = f"{g[1]/10}", manager = manager)
-                    if event.ui_element == psi_decrease:
+                    if event.ui_element == psi_decrease and psi[1] > 5*math.pi/180:
                         psi_value.kill()
                         psi[1] -= 5*math.pi/180
                         psi_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 100), (100, 50)), text = f"{round(math.degrees(psi[1]))}", manager = manager)
-                    if event.ui_element == psi_increase:
+                    if event.ui_element == psi_increase and psi[1] < 85*math.pi/180:
                         psi_value.kill()
                         psi[1] += 5*math.pi/180
                         psi_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 100), (100, 50)), text = f"{round(math.degrees(psi[1]))}", manager = manager)
-                    if event.ui_element == v_decrease:
+                    if event.ui_element == v_decrease and v[1] > 5:
                         v_value.kill()
                         v[1] -= 5
                         v_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 150), (100, 50)), text = f"{v[1]/10}", manager = manager)
