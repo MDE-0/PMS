@@ -92,21 +92,27 @@ while True:
                         running = True
                         menu = False
                     if event.ui_element == g_decrease:
+                        g_value.kill()
                         g[1] -= 2
                         g_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 50), (100, 50)), text = f"{g[1]/10}", manager = manager)
                     if event.ui_element == g_increase:
+                        g_value.kill()
                         g[1] += 2
                         g_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 50), (100, 50)), text = f"{g[1]/10}", manager = manager)
                     if event.ui_element == psi_decrease:
+                        psi_value.kill()
                         psi[1] -= 5*math.pi/180
                         psi_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 100), (100, 50)), text = f"{round(math.degrees(psi[1]))}", manager = manager)
                     if event.ui_element == psi_increase:
+                        psi_value.kill()
                         psi[1] += 5*math.pi/180
                         psi_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 100), (100, 50)), text = f"{round(math.degrees(psi[1]))}", manager = manager)
                     if event.ui_element == v_decrease:
+                        v_value.kill()
                         v[1] -= 5
                         v_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 150), (100, 50)), text = f"{v[1]/10}", manager = manager)
                     if event.ui_element == v_increase:
+                        v_value.kill()
                         v[1] += 5
                         v_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 150), (100, 50)), text = f"{v[1]/10}", manager = manager)
                 
@@ -147,21 +153,27 @@ while True:
                         running = False
                         
                     if event.ui_element == g_decrease:
+                        g_value.kill()
                         g[1] -= 2
                         g_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 50), (100, 50)), text = f"{g[1]/10}", manager = manager)
                     if event.ui_element == g_increase:
+                        g_value.kill()
                         g[1] += 2
                         g_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 50), (100, 50)), text = f"{g[1]/10}", manager = manager)
                     if event.ui_element == psi_decrease:
+                        psi_value.kill()
                         psi[1] -= 5*math.pi/180
                         psi_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 100), (100, 50)), text = f"{round(math.degrees(psi[1]))}", manager = manager)
                     if event.ui_element == psi_increase:
+                        psi_value.kill()
                         psi[1] += 5*math.pi/180
                         psi_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 100), (100, 50)), text = f"{round(math.degrees(psi[1]))}", manager = manager)
                     if event.ui_element == v_decrease:
+                        v_value.kill()
                         v[1] -= 5
                         v_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 150), (100, 50)), text = f"{v[1]/10}", manager = manager)
                     if event.ui_element == v_increase:
+                        v_value.kill()
                         v[1] += 5
                         v_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 150), (100, 50)), text = f"{v[1]/10}", manager = manager)
                 if event.user_type == pygame_gui.UI_BUTTON_ON_HOVERED:
