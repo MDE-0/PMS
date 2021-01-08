@@ -178,9 +178,9 @@ while True:
                         v_value = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((simSize[0]+220, 150), (100, 50)), text = f"{v[1]/10}", manager = manager)
                 if event.user_type == pygame_gui.UI_BUTTON_ON_HOVERED:
                     if event.ui_element == g_name:
-                        grav_arrow_colour = [255,255,0,255]
+                        grav_arrow_colour = [255,0,0,255]
                     if event.ui_element == v_name:
-                        vel_arrow_colour = [255,255,0,255]
+                        vel_arrow_colour = [255,0,0,255]
                 elif event.user_type == pygame_gui.UI_BUTTON_ON_UNHOVERED:
                     if event.ui_element == g_name:
                         grav_arrow_colour = [255, 255, 255, 255]
